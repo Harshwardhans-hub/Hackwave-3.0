@@ -59,27 +59,47 @@ export default function Navbar({ currentRoute, onNavigate, onOpenLogin, currentU
     return () => clearInterval(interval);
   }, []);
 
-  const operationalNavItems = [
-    { id: 'overview', label: 'HOME' },
-    { id: 'dashboard', label: 'DASHBOARD' },
-    { id: 'optimizer', label: 'OPTIMIZER' },
-    { id: 'freight', label: 'FREIGHT' },
-    { id: 'field-dispatch', label: 'DISPATCH' },
-    { id: 'weather', label: 'WEATHER' },
-    { id: 'audit', label: 'AUDIT' }
+  // Role-aware nav items — what shows in the pill bar depends on who is logged in
+  const getDashboardRoute = () => {
+    if (!currentUser) return 'dashboard';
+    return currentUser.authType === 'COA' ? 'coa-dashboard' : 'dept-dashboard';
+  };
+
+  const isDashboardActive = () => {
+    return ['coa-dashboard', 'dept-dashboard'].includes(currentRoute);
+  };
+
+  const coaNavItems = [
+    { id: 'coa-dashboard', label: 'DASHBOARD' },
+    { id: 'coa-requests',  label: 'REQUESTS'  },
+    { id: 'coa-schedule',  label: 'SCHEDULE'  },
+    { id: 'weather',       label: 'WEATHER'   },
+    { id: 'freight',       label: 'FREIGHT'   },
+    { id: 'field-dispatch',label: 'DISPATCH'  },
+    { id: 'audit',         label: 'AUDIT'     },
   ];
+
+  const deptNavItems = [
+    { id: 'dept-dashboard', label: 'DASHBOARD' },
+    { id: 'dept-requests',  label: 'REQUESTS'  },
+    { id: 'dept-schedule',  label: 'SCHEDULE'  },
+    { id: 'dept-contact',   label: 'INTER-DEPT'},
+    { id: 'dept-dispatch',  label: 'DISPATCH'  },
+  ];
+
+  const activeNavItems = currentUser?.authType === 'COA' ? coaNavItems : deptNavItems;
 
   // Authentic Indian Railways data systems & modules from SIH 26027 PDF
   const systemMenuItems = [
-    { label: 'TMS (Track Defects, TGI & USFD)', icon: '🛤️', action: () => onNavigate('optimizer') },
-    { label: 'SMMS (Signals & Point Machines)', icon: '🚦', action: () => onNavigate('optimizer') },
-    { label: 'TDMS (25kV OHE Catenary & TRD)', icon: '⚡', action: () => onNavigate('optimizer') },
-    { label: 'COA (Train Timetables & Occupancy)', icon: '🕒', action: () => onNavigate('dashboard') },
+    { label: 'TMS (Track Defects, TGI & USFD)', icon: '🛤️', action: () => onNavigate(getDashboardRoute()) },
+    { label: 'SMMS (Signals & Point Machines)', icon: '🚦', action: () => onNavigate(getDashboardRoute()) },
+    { label: 'TDMS (25kV OHE Catenary & TRD)', icon: '⚡', action: () => onNavigate(getDashboardRoute()) },
+    { label: 'COA (Train Timetables & Occupancy)', icon: '🕒', action: () => onNavigate(getDashboardRoute()) },
     { label: 'Freight Forecaster (data.gov.in)', icon: '📦', badge: 'USP #2', action: () => onNavigate('freight') },
-    { label: 'Field 2G SMS / WhatsApp Dispatch', icon: '📱', badge: 'USP #1', action: () => onNavigate('field-dispatch') },
+    { label: 'Field 2G SMS / WhatsApp Dispatch', icon: '📱', badge: 'USP #1', action: () => onNavigate(currentUser?.authType === 'COA' ? 'field-dispatch' : 'dept-dispatch') },
     { label: 'IMD Weather & Monsoon Radar', icon: '🌧️', badge: 'USP #3', action: () => onNavigate('weather') },
-    { label: 'Cross-Dept Bidding & Bundling', icon: '⚖️', badge: 'USP #4', action: () => onNavigate('optimizer') },
-    { label: 'CRIS Form T/348M (PTW Dispatch)', icon: '📋', action: () => onNavigate('field-dispatch') },
+    { label: 'Cross-Dept Bidding & Bundling', icon: '⚖️', badge: 'USP #4', action: () => onNavigate(currentUser?.authType === 'COA' ? 'coa-requests' : 'dept-requests') },
+    { label: 'CRIS Form T/348M (PTW Dispatch)', icon: '📋', action: () => onNavigate(currentUser?.authType === 'COA' ? 'field-dispatch' : 'dept-dispatch') },
     { label: 'XAI & Safety Rules Audit (IRPWM)', icon: '🔍', action: () => onNavigate('audit') }
   ];
 
@@ -111,14 +131,6 @@ export default function Navbar({ currentRoute, onNavigate, onOpenLogin, currentU
           <nav className={`irctc-nav-capsule ${mobileOpen ? 'open' : ''}`}>
             {currentUser ? (
               <>
-                {/* HOME */}
-                <button
-                  className={`irctc-nav-pill ${currentRoute === 'overview' ? 'active' : ''}`}
-                  onClick={() => { onNavigate('overview'); setMobileOpen(false); }}
-                >
-                  HOME
-                </button>
-
                 {/* RAILWAY SYSTEMS DROPDOWN */}
                 <div 
                   className="irctc-nav-dropdown-wrapper"
@@ -170,23 +182,19 @@ export default function Navbar({ currentRoute, onNavigate, onOpenLogin, currentU
                   )}
                 </div>
 
-                {/* Subpage operational tabs */}
-                {operationalNavItems.slice(1).map((item) => {
-                  const isActive = currentRoute === item.id;
-                  return (
-                    <button
-                      key={item.id}
-                      className={`irctc-nav-pill ${isActive ? 'active' : ''}`}
-                      onClick={() => {
-                        onNavigate(item.id);
-                        setMobileOpen(false);
-                      }}
-                    >
-                      {item.label}
-                      {item.badge && <span className="irctc-pill-tag">{item.badge}</span>}
-                    </button>
-                  );
-                })}
+                {/* Role-aware nav pills */}
+                {activeNavItems.map((item) => (
+                  <button
+                    key={item.id}
+                    className={`irctc-nav-pill ${currentRoute === item.id ? 'active' : ''}`}
+                    onClick={() => {
+                      onNavigate(item.id);
+                      setMobileOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
               </>
             ) : (
               <div style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '0.78rem', fontWeight: 600, padding: '4px 12px', letterSpacing: '0.04em' }}>
