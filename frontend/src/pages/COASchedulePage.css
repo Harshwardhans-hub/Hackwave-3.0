@@ -1,0 +1,335 @@
+/* ==========================================================================
+   Sahayak Rail — COA Schedule Editor  (Light portal theme)
+   ========================================================================== */
+
+.coa-sched-page {
+  background: linear-gradient(180deg, #edf4fb 0%, #f4f8fc 60%, #ffffff 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  padding: 24px 28px 56px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.coa-sched-page__header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 20px;
+  border-bottom: 1px solid rgba(0,84,148,0.15);
+  padding-bottom: 20px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.coa-sched-page__title {
+  font-size: 1.85rem; font-weight: 800;
+  letter-spacing: -0.02em; color: #1e293b;
+  margin: 4px 0 6px; line-height: 1.2;
+}
+.coa-sched-page__title span {
+  background: linear-gradient(135deg, #005494, #1352b2, #f2722b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.coa-sched-page__meta { font-size: 0.83rem; color: #64748b; max-width: 560px; line-height: 1.5; }
+.coa-sched-page__actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+.coa-btn-outline {
+  background: #fff; color: #334155;
+  border: 1px solid rgba(0,84,148,0.2);
+  padding: 10px 20px; border-radius: 8px;
+  font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s;
+}
+.coa-btn-outline:hover { border-color: #005494; color: #005494; background: #eef5fc; }
+
+.coa-btn-lock {
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff; border: none;
+  padding: 10px 22px; border-radius: 8px;
+  font-weight: 700; font-size: 0.85rem; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(5,150,105,0.25);
+  transition: all 0.2s;
+}
+.coa-btn-lock:hover {
+  background: linear-gradient(135deg, #047857, #059669);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(5,150,105,0.35);
+}
+.coa-btn-lock:disabled {
+  background: #e2e8f0; color: #94a3b8; cursor: not-allowed;
+  box-shadow: none; transform: none;
+}
+.coa-locked-badge {
+  padding: 10px 18px;
+  background: rgba(16,185,129,0.08);
+  color: #059669;
+  border-radius: 8px; font-size: 0.85rem; font-weight: 700;
+  border: 1px solid rgba(16,185,129,0.25);
+}
+
+/* ── Success banner ─────────────────────────────────── */
+.coa-success-banner {
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.25);
+  color: #059669;
+  padding: 14px 20px; border-radius: 10px;
+  font-size: 0.9rem; font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ── Stats strip ────────────────────────────────────── */
+.coa-sched-stats {
+  display: flex; gap: 14px; margin-bottom: 26px; flex-wrap: wrap;
+}
+.coa-sched-stat {
+  background: #fff;
+  border: 1px solid rgba(0,84,148,0.12);
+  border-radius: 12px;
+  padding: 14px 22px;
+  flex: 1; min-width: 120px;
+  display: flex; flex-direction: column; gap: 3px;
+  box-shadow: 0 1px 6px rgba(0,31,63,0.05);
+}
+.coa-sched-stat__num   { font-size: 1.8rem; font-weight: 800; color: #005494; }
+.coa-sched-stat__lbl   { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── Gantt preview ──────────────────────────────────── */
+.coa-gantt-section {
+  background: #fff;
+  border: 1px solid rgba(0,84,148,0.12);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin-bottom: 26px;
+  overflow-x: auto;
+  box-shadow: 0 2px 10px rgba(0,31,63,0.06);
+}
+.coa-gantt-title { font-size: 0.95rem; font-weight: 700; color: #1e293b; margin-bottom: 16px; }
+.coa-gantt { min-width: 720px; }
+.coa-gantt-axis {
+  display: flex; margin-left: 140px; margin-bottom: 4px;
+}
+.coa-gantt-tick {
+  flex: 1; font-size: 0.65rem; color: #94a3b8; text-align: left;
+  font-family: 'Roboto Mono', monospace;
+}
+.coa-gantt-row { display: flex; align-items: stretch; margin-bottom: 8px; }
+.coa-gantt-row__label {
+  width: 140px; flex-shrink: 0;
+  font-size: 0.78rem; font-weight: 600; color: #334155;
+  padding-right: 12px;
+  display: flex; align-items: center;
+}
+.coa-gantt-row__timeline {
+  flex: 1; height: 38px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  position: relative; overflow: hidden;
+}
+.coa-gantt-gridline {
+  position: absolute; top: 0; bottom: 0;
+  width: 1px; background: rgba(0,84,148,0.06);
+}
+.coa-gantt-block {
+  position: absolute; top: 4px; bottom: 4px;
+  border-radius: 4px;
+  display: flex; align-items: center;
+  padding: 0 8px; cursor: default;
+  overflow: hidden; min-width: 20px;
+}
+.coa-gantt-block__text {
+  font-size: 0.7rem; font-weight: 600;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  color: #1e293b;
+}
+
+/* ── Block section ──────────────────────────────────── */
+.coa-block-section { margin-bottom: 30px; }
+.coa-block-section__title {
+  font-size: 1rem; font-weight: 700; color: #1e293b;
+  margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.coa-block-section__count {
+  background: #f1f5f9; color: #64748b;
+  padding: 2px 10px; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 700;
+}
+.coa-block-cards { display: flex; flex-direction: column; gap: 14px; }
+
+.coa-block-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 8px rgba(0,31,63,0.05);
+  border-left: 4px solid #e2e8f0;
+  transition: box-shadow 0.2s;
+}
+.coa-block-card:hover { box-shadow: 0 6px 20px rgba(0,84,148,0.08); }
+.coa-block-card--approved { border-left-color: #10b981; }
+.coa-block-card--pending  { border-left-color: #f59e0b; }
+
+.coa-block-card__header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+  flex-wrap: wrap; gap: 8px;
+}
+.coa-block-id {
+  font-size: 0.78rem; color: #005494;
+  font-family: 'Roboto Mono', monospace; font-weight: 600; margin-right: 8px;
+}
+.coa-block-type {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+}
+.coa-block-approved-badge {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(16,185,129,0.1); color: #059669;
+  border: 1px solid rgba(16,185,129,0.2);
+}
+.coa-block-pending-badge {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+  background: rgba(245,158,11,0.1); color: #b45309;
+  border: 1px solid rgba(245,158,11,0.25);
+}
+.coa-block-title { font-size: 1rem; font-weight: 700; color: #1e293b; margin: 0 0 12px; }
+.coa-block-details {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px 20px; margin-bottom: 14px;
+}
+.coa-block-detail { display: flex; flex-direction: column; gap: 2px; }
+.coa-block-detail span  { font-size: 0.72rem; color: #94a3b8; }
+.coa-block-detail strong { font-size: 0.85rem; color: #1e293b; }
+
+.coa-block-pn {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.82rem; color: #334155;
+  background: #eef5fc;
+  border: 1px solid rgba(0,84,148,0.15);
+  padding: 8px 14px; border-radius: 8px; margin-bottom: 12px;
+}
+.coa-pn-val { color: #005494; font-size: 0.95rem; font-family: 'Roboto Mono', monospace; }
+.coa-block-linked { margin-bottom: 12px; }
+.coa-block-linked__title {
+  font-size: 0.72rem; color: #94a3b8;
+  margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.04em;
+}
+.coa-linked-tag {
+  display: inline-block;
+  background: #f1f5f9; color: #64748b;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 0.72rem; margin-right: 6px; margin-bottom: 4px;
+}
+.coa-linked-tag--done { background: rgba(16,185,129,0.08); color: #059669; }
+.coa-block-card__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ── Lock CTA ───────────────────────────────────────── */
+.coa-lock-cta {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 20px;
+  padding: 22px 28px;
+  background: rgba(16,185,129,0.05);
+  border: 1px solid rgba(16,185,129,0.2);
+  border-radius: 14px; margin-top: 12px; flex-wrap: wrap;
+}
+.coa-lock-cta__title { font-size: 1rem; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+.coa-lock-cta__sub   { font-size: 0.82rem; color: #64748b; }
+
+/* ── Edit Modal ─────────────────────────────────────── */
+.coa-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999; padding: 20px;
+}
+.coa-modal {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  width: 100%; max-width: 520px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,31,63,0.18);
+}
+.coa-modal__header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+.coa-modal__header h3 { font-size: 1rem; font-weight: 700; color: #1e293b; margin: 0; }
+.coa-modal__close {
+  background: none; border: none; color: #94a3b8; font-size: 1rem; cursor: pointer;
+}
+.coa-modal__close:hover { color: #1e293b; }
+.coa-modal__body {
+  padding: 20px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.coa-modal__row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.coa-modal__field { display: flex; flex-direction: column; gap: 5px; }
+.coa-modal__field label {
+  font-size: 0.72rem; font-weight: 700; color: #64748b;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.coa-modal__input {
+  padding: 9px 12px; border-radius: 8px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  color: #1e293b; font-size: 0.88rem;
+  outline: none; width: 100%; box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+.coa-modal__input:focus {
+  border-color: #005494;
+  box-shadow: 0 0 0 3px rgba(0,84,148,0.12);
+  background: #fff;
+}
+.coa-modal__input[readonly] { opacity: 0.5; cursor: default; }
+.coa-modal__footer {
+  display: flex; gap: 12px; justify-content: flex-end;
+  padding: 14px 24px 20px;
+  border-top: 1px solid #e2e8f0;
+}
+.coa-modal-btn {
+  padding: 9px 20px; border-radius: 8px;
+  font-size: 0.85rem; font-weight: 700; cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.coa-modal-btn--cancel {
+  background: #f1f5f9; color: #64748b; border: 1px solid #e2e8f0;
+}
+.coa-modal-btn--cancel:hover { background: #e2e8f0; }
+.coa-modal-btn--save {
+  background: linear-gradient(135deg, #005494, #1352b2);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(0,84,148,0.25);
+}
+.coa-modal-btn--save:hover { background: linear-gradient(135deg, #003e7a, #005494); }
+
+/* ── Action buttons (reused across block cards) ─────── */
+.coa-action-btn {
+  padding: 8px 16px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.coa-action-btn:hover { transform: translateY(-1px); }
+.coa-action-btn--approve {
+  background: rgba(16,185,129,0.1); color: #059669;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+.coa-action-btn--approve:hover { background: rgba(16,185,129,0.18); }
+.coa-action-btn--edit {
+  background: #f8fafc; color: #334155; border: 1px solid #e2e8f0;
+}
+.coa-action-btn--edit:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.coa-action-btn--reject {
+  background: rgba(239,68,68,0.06); color: #b91c1c;
+  border: 1px solid rgba(239,68,68,0.18);
+}
+.coa-action-btn--reject:hover { background: rgba(239,68,68,0.12); }
+
+/* ── Shared ─────────────────────────────────────────── */
+.coa-empty { color: #94a3b8; font-size: 0.85rem; padding: 16px 0; }
+.font-mono { font-family: 'Roboto Mono', 'SFMono-Regular', Consolas, monospace; }
+/* badge reuse */
+.coa-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.08em; color: #f2722b; background: rgba(242,114,43,0.08); border: 1px solid rgba(242,114,43,0.2); padding: 4px 14px; border-radius: 20px; margin-bottom: 8px; text-transform: uppercase; }
+.coa-badge__dot { width: 7px; height: 7px; border-radius: 50%; background: #f2722b; box-shadow: 0 0 8px #f2722b; animation: coaPulseDot 2s infinite; }
+@keyframes coaPulseDot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }

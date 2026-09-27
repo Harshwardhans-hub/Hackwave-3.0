@@ -280,3 +280,73 @@
   color: #fb8500;
   text-decoration: underline;
 }
+
+/* ── New 4-dept card selection layout ─────────────────── */
+.login-dept-select {
+  padding: 24px 28px 20px;
+}
+.login-dept-prompt {
+  font-size: 0.88rem;
+  color: #334155;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+.login-dept-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.login-dept-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid var(--dept-color, #005494);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 4px rgba(0,31,63,0.05);
+}
+.login-dept-card:hover {
+  background: #f0f7ff;
+  border-color: var(--dept-color, #005494);
+  box-shadow: 0 4px 14px rgba(0,84,148,0.12);
+  transform: translateX(3px);
+}
+.login-dept-icon  { font-size: 1.5rem; flex-shrink: 0; }
+.login-dept-info  { flex: 1; }
+.login-dept-label { display: block; font-size: 0.9rem; font-weight: 700; color: #102a43; }
+.login-dept-sub   { display: block; font-size: 0.75rem; color: #627d98; margin-top: 2px; }
+.login-dept-arrow { color: #cbd5e1; flex-shrink: 0; }
+
+/* Confirm step */
+.login-back-btn {
+  background: none;
+  border: none;
+  color: #627d98;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: color 0.15s;
+}
+.login-back-btn:hover { color: #005494; }
+.login-selected-dept {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #eef5fc;
+  border: 1px solid rgba(0,84,148,0.15);
+  border-radius: 8px;
+  border-left: 4px solid var(--dept-color, #005494);
+  margin-bottom: 18px;
+}

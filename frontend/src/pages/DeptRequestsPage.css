@@ -1,0 +1,174 @@
+/* ==========================================================================
+   Sahayak Rail — Department Requests Page (light portal theme)
+   ========================================================================== */
+
+.dept-req-page {
+  background: linear-gradient(180deg, #edf4fb 0%, #f4f8fc 60%, #ffffff 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  padding: 24px 28px 56px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dept-req-page__header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 20px;
+  border-bottom: 1px solid rgba(0,84,148,0.15);
+  padding-bottom: 20px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.dept-req-page__title {
+  font-size: 1.85rem; font-weight: 800;
+  letter-spacing: -0.02em; color: #1e293b;
+  margin: 4px 0 6px; line-height: 1.2;
+}
+.dept-req-page__meta  { font-size: 0.83rem; color: #64748b; max-width: 540px; }
+.dept-req-page__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ── Success Banner ───────────────────────────────── */
+.dept-success-banner {
+  padding: 14px 20px; border-radius: 10px;
+  border: 1px solid; font-size: 0.9rem; font-weight: 600;
+  margin-bottom: 20px;
+}
+
+/* ── Submission Form ──────────────────────────────── */
+.dept-form-card {
+  background: #fff;
+  border: 1px solid rgba(0,84,148,0.15);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 16px rgba(0,84,148,0.08);
+  overflow: hidden;
+}
+.dept-form-card__header {
+  padding: 18px 24px 14px;
+  border-bottom: 1px solid;
+}
+.dept-form-card__title { font-size: 1.05rem; font-weight: 700; margin: 0 0 4px; }
+.dept-form-card__sub   { font-size: 0.82rem; color: #64748b; margin: 0; }
+
+.dept-form {
+  padding: 20px 24px 24px;
+  display: flex; flex-direction: column; gap: 14px;
+}
+.dept-form__row {
+  display: flex; gap: 14px; flex-wrap: wrap; align-items: flex-end;
+}
+.dept-form__field {
+  display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 140px;
+}
+.dept-form__field--grow { flex: 2; }
+.dept-form__field label {
+  font-size: 0.72rem; font-weight: 700; color: #64748b;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+.dept-input {
+  padding: 9px 12px; border-radius: 8px;
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  color: #1e293b; font-size: 0.88rem;
+  outline: none; width: 100%; box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dept-input:focus {
+  border-color: #005494;
+  box-shadow: 0 0 0 3px rgba(0,84,148,0.1);
+  background: #fff;
+}
+.dept-textarea { resize: vertical; min-height: 60px; }
+.dept-form__footer { display: flex; justify-content: flex-end; margin-top: 4px; }
+.dept-btn-submit { padding: 11px 28px; font-size: 0.9rem; border-radius: 8px; }
+
+/* ── Pipeline bar ─────────────────────────────────── */
+.dept-pipeline-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 14px 18px; background: #fff;
+  border: 1px solid rgba(0,84,148,0.12);
+  border-radius: 12px; margin-bottom: 22px;
+  box-shadow: 0 1px 6px rgba(0,31,63,0.05);
+}
+.dept-pipe-step {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 14px; border-radius: 8px;
+  border: 1px solid #e2e8f0; background: #f8fafc;
+  transition: all 0.2s;
+}
+.dept-pipe-step.active { border-color: var(--step-color, #005494); background: #eef5fc; }
+.dept-pipe-step__num {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: #e2e8f0; color: #64748b;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 800; flex-shrink: 0;
+}
+.dept-pipe-step__label { font-size: 0.82rem; font-weight: 600; color: #1e293b; }
+.dept-pipe-arrow { color: #cbd5e1; font-size: 1rem; flex-shrink: 0; }
+
+/* ── Request Cards ────────────────────────────────── */
+.dept-req-cards { display: flex; flex-direction: column; gap: 14px; }
+.dept-req-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 4px solid;
+  border-radius: 14px; padding: 20px 22px;
+  box-shadow: 0 2px 8px rgba(0,31,63,0.05);
+  transition: box-shadow 0.2s;
+}
+.dept-req-card:hover { box-shadow: 0 6px 20px rgba(0,84,148,0.08); }
+
+.dept-req-card__top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+  flex-wrap: wrap; gap: 8px;
+}
+.dept-req-card__ids  { display: flex; align-items: center; gap: 12px; }
+.dept-req-card__id   { font-size: 0.78rem; color: #005494; font-family: 'Roboto Mono', monospace; font-weight: 600; }
+.dept-req-card__urgency { font-size: 0.78rem; font-weight: 700; }
+.dept-req-card__status {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+}
+.dept-req-card__activity { font-size: 1rem; font-weight: 700; color: #1e293b; margin-bottom: 8px; }
+.dept-req-card__details {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 0.78rem; color: #64748b; margin-bottom: 14px;
+}
+
+/* Progress mini-bar */
+.dept-progress-bar {
+  display: flex; gap: 0; margin-bottom: 12px;
+}
+.dept-progress-step {
+  flex: 1; text-align: center; padding: 5px 4px;
+  font-size: 0.68rem; font-weight: 600;
+  background: #f1f5f9; border: 1px solid #e2e8f0;
+  color: #94a3b8;
+  border-right: none;
+  transition: all 0.2s;
+}
+.dept-progress-step:first-child { border-radius: 6px 0 0 6px; }
+.dept-progress-step:last-child  { border-radius: 0 6px 6px 0; border-right: 1px solid #e2e8f0; }
+.dept-progress-step.done { color: #fff; }
+
+/* Allocated banner */
+.dept-req-allocated {
+  display: flex; gap: 18px; flex-wrap: wrap;
+  padding: 10px 14px; border-radius: 8px; border: 1px solid;
+  font-size: 0.82rem; font-weight: 600;
+}
+
+/* Empty */
+.dept-empty { color: #94a3b8; font-size: 0.85rem; padding: 20px 0; text-align: center; }
+.dept-empty-cta {
+  display: block; margin: 10px auto 0; background: none; border: none;
+  font-size: 0.88rem; font-weight: 700; cursor: pointer; text-decoration: underline;
+}
+
+/* Shared buttons */
+.dept-btn-primary { color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:all 0.2s; }
+.dept-btn-primary:hover { opacity:0.88; transform:translateY(-1px); }
+.dept-btn-outline  { background:#fff; color:#334155; border:1px solid rgba(0,84,148,0.2); padding:10px 20px; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s; }
+.dept-btn-outline:hover { border-color:#005494; color:#005494; background:#eef5fc; }
+.dept-badge { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 14px; border-radius:20px; border:1px solid; margin-bottom:8px; }
+.dept-badge__dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; animation:deptDotPulse 2s infinite; }
+@keyframes deptDotPulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.font-mono { font-family:'Roboto Mono','SFMono-Regular',Consolas,monospace; }

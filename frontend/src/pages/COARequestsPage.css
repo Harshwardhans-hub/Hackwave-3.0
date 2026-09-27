@@ -1,0 +1,290 @@
+/* ==========================================================================
+   Sahayak Rail — COA Requests Pipeline  (Light portal theme)
+   ========================================================================== */
+
+.coa-req-page {
+  background: linear-gradient(180deg, #edf4fb 0%, #f4f8fc 60%, #ffffff 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  padding: 24px 28px 56px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ── Header ─────────────────────────────────────────── */
+.coa-req-page__header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 20px;
+  border-bottom: 1px solid rgba(0,84,148,0.15);
+  padding-bottom: 20px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.coa-req-page__title {
+  font-size: 1.85rem; font-weight: 800;
+  letter-spacing: -0.02em; color: #1e293b;
+  margin: 4px 0 6px; line-height: 1.2;
+}
+.coa-req-page__title span {
+  background: linear-gradient(135deg, #005494, #1352b2, #f2722b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.coa-req-page__meta  { font-size: 0.83rem; color: #64748b; max-width: 560px; }
+.coa-req-page__actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ── Shared button reuse ────────────────────────────── */
+.coa-btn-primary {
+  background: linear-gradient(135deg, #005494, #1352b2);
+  color: #fff; border: none;
+  padding: 10px 20px; border-radius: 8px;
+  font-weight: 700; font-size: 0.85rem; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,84,148,0.25);
+  transition: all 0.2s;
+}
+.coa-btn-primary:hover {
+  background: linear-gradient(135deg, #003e7a, #005494);
+  transform: translateY(-1px);
+}
+.coa-btn-outline {
+  background: #fff; color: #334155;
+  border: 1px solid rgba(0,84,148,0.2);
+  padding: 10px 20px; border-radius: 8px;
+  font-weight: 600; font-size: 0.85rem; cursor: pointer;
+  transition: all 0.2s;
+}
+.coa-btn-outline:hover { border-color: #005494; color: #005494; background: #eef5fc; }
+
+/* ── Pipeline Stage Tabs ────────────────────────────── */
+.coa-pipeline-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px;
+}
+.coa-pipeline-tab {
+  display: flex; align-items: center; gap: 7px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.coa-pipeline-tab:hover  { border-color: rgba(0,84,148,0.3); color: #005494; }
+.coa-pipeline-tab.active {
+  background: #eef5fc;
+  border-color: rgba(0,84,148,0.4);
+  color: #005494;
+  box-shadow: 0 2px 6px rgba(0,84,148,0.1);
+}
+.coa-tab-count {
+  background: rgba(0,84,148,0.1);
+  color: #005494;
+  padding: 1px 7px;
+  border-radius: 10px;
+  font-size: 0.72rem; font-weight: 700;
+}
+
+/* ── Pipeline visual bar ────────────────────────────── */
+.coa-pipeline-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  padding: 14px 18px;
+  background: #fff;
+  border: 1px solid rgba(0,84,148,0.12);
+  border-radius: 12px;
+  margin-bottom: 22px;
+  box-shadow: 0 1px 6px rgba(0,31,63,0.05);
+}
+.coa-pipe-step {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  transition: all 0.2s;
+}
+.coa-pipe-step.has-items {
+  border-color: rgba(0,84,148,0.35);
+  background: #eef5fc;
+}
+.coa-pipe-step__icon  { font-size: 1.15rem; }
+.coa-pipe-step__label { font-size: 0.82rem; font-weight: 700; color: #1e293b; }
+.coa-pipe-step__count { font-size: 0.72rem; color: #64748b; }
+.coa-pipe-arrow { color: #cbd5e1; font-size: 1.1rem; flex-shrink: 0; }
+
+/* ── Request Cards ──────────────────────────────────── */
+.coa-req-cards { display: flex; flex-direction: column; gap: 16px; }
+
+.coa-req-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 8px rgba(0,31,63,0.05);
+  transition: box-shadow 0.2s;
+  border-left: 4px solid #e2e8f0;
+}
+.coa-req-card:hover { box-shadow: 0 6px 20px rgba(0,84,148,0.08); }
+.coa-req-card--finalised      { border-left-color: #10b981; }
+.coa-req-card--optimiser_done { border-left-color: #005494; }
+.coa-req-card--ai_processing  { border-left-color: #f59e0b; }
+.coa-req-card--incoming       { border-left-color: #cbd5e1; }
+
+.coa-req-card__top {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+}
+.coa-req-card__left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.coa-req-card__id {
+  font-size: 0.78rem; color: #005494;
+  font-family: 'Roboto Mono', monospace; font-weight: 600;
+}
+.coa-req-card__dept {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px;
+}
+.coa-req-card__urgency { font-size: 0.78rem; font-weight: 700; }
+
+/* Stage pills */
+.coa-stage-pill {
+  font-size: 0.72rem; font-weight: 700;
+  padding: 4px 12px; border-radius: 20px;
+}
+.coa-stage-pill--finalised      { background: rgba(16,185,129,0.1);  color: #059669; }
+.coa-stage-pill--optimiser_done { background: rgba(0,84,148,0.1);    color: #005494; }
+.coa-stage-pill--ai_processing  { background: rgba(245,158,11,0.12); color: #b45309; }
+.coa-stage-pill--incoming       { background: #f1f5f9; color: #64748b; }
+
+.coa-req-card__body { margin-bottom: 14px; }
+.coa-req-card__activity {
+  font-size: 1rem; font-weight: 700; color: #1e293b; margin-bottom: 6px;
+}
+.coa-req-card__details {
+  display: flex; gap: 16px; flex-wrap: wrap;
+  font-size: 0.78rem; color: #64748b;
+}
+
+/* ── AI Segregation Report ──────────────────────────── */
+.coa-ai-report {
+  background: #fffbeb;
+  border: 1px solid rgba(245,158,11,0.25);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.coa-ai-report__header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+}
+.coa-ai-report__title { font-size: 0.85rem; font-weight: 700; color: #b45309; }
+.coa-ai-report__score { font-size: 0.82rem; color: #92400e; font-weight: 600; }
+.coa-ai-report__reasoning {
+  font-size: 0.82rem; color: #78350f; margin-bottom: 12px; line-height: 1.5;
+}
+.coa-ai-factors { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.coa-ai-factor__row {
+  display: flex; justify-content: space-between;
+  font-size: 0.78rem; color: #78350f; margin-bottom: 3px;
+}
+.coa-ai-factor__bar {
+  height: 5px; background: #fde68a; border-radius: 3px; overflow: hidden;
+}
+.coa-ai-factor__fill { height: 100%; background: #f59e0b; border-radius: 3px; }
+.coa-ai-report__rec {
+  font-size: 0.78rem; color: #92400e; font-weight: 600;
+  background: rgba(245,158,11,0.1);
+  padding: 6px 10px; border-radius: 6px;
+}
+
+/* ── Optimiser Report ───────────────────────────────── */
+.coa-opt-report {
+  background: #eef5fc;
+  border: 1px solid rgba(0,84,148,0.2);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 14px;
+}
+.coa-opt-report__header {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 12px;
+}
+.coa-opt-report__title { font-size: 0.85rem; font-weight: 700; color: #005494; }
+.coa-opt-report__badge {
+  font-size: 0.72rem;
+  background: rgba(0,84,148,0.1);
+  color: #005494;
+  padding: 3px 10px; border-radius: 20px; font-weight: 700;
+}
+.coa-opt-stats {
+  display: grid; grid-template-columns: repeat(4,1fr);
+  gap: 10px; margin-bottom: 12px;
+}
+@media (max-width: 680px) { .coa-opt-stats { grid-template-columns: repeat(2,1fr); } }
+.coa-opt-stat { text-align: center; }
+.coa-opt-stat__val { display: block; font-size: 1.05rem; font-weight: 800; color: #1e293b; }
+.coa-opt-stat__lbl { font-size: 0.7rem; color: #64748b; text-transform: uppercase; }
+
+.coa-opt-constraints {
+  list-style: none; margin: 0; padding: 0;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.coa-opt-constraints li { font-size: 0.78rem; color: #059669; font-weight: 500; }
+.coa-opt-bundle {
+  font-size: 0.78rem; color: #b45309; margin-top: 8px;
+  background: rgba(245,158,11,0.08); padding: 6px 10px; border-radius: 6px;
+}
+
+/* ── Finalised row ──────────────────────────────────── */
+.coa-finalised-row {
+  display: flex; gap: 20px;
+  font-size: 0.82rem; color: #059669; font-weight: 600;
+  background: rgba(16,185,129,0.07);
+  border: 1px solid rgba(16,185,129,0.2);
+  padding: 10px 14px; border-radius: 8px;
+  margin-bottom: 12px; flex-wrap: wrap;
+}
+
+/* ── Action buttons ─────────────────────────────────── */
+.coa-req-card__actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.coa-action-btn {
+  padding: 8px 16px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer; border: none;
+  transition: all 0.2s;
+}
+.coa-action-btn:hover { transform: translateY(-1px); }
+.coa-action-btn--ai {
+  background: #fffbeb; color: #b45309;
+  border: 1px solid rgba(245,158,11,0.3);
+}
+.coa-action-btn--ai:hover { background: #fef3c7; }
+.coa-action-btn--opt {
+  background: #eef5fc; color: #005494;
+  border: 1px solid rgba(0,84,148,0.25);
+}
+.coa-action-btn--opt:hover { background: #d8ebf9; }
+.coa-action-btn--approve {
+  background: rgba(16,185,129,0.1); color: #059669;
+  border: 1px solid rgba(16,185,129,0.3);
+}
+.coa-action-btn--approve:hover { background: rgba(16,185,129,0.18); }
+.coa-action-btn--edit {
+  background: #f8fafc; color: #334155;
+  border: 1px solid #e2e8f0;
+}
+.coa-action-btn--edit:hover { background: #f1f5f9; border-color: #cbd5e1; }
+.coa-action-btn--reject {
+  background: rgba(239,68,68,0.06); color: #b91c1c;
+  border: 1px solid rgba(239,68,68,0.2);
+}
+.coa-action-btn--reject:hover { background: rgba(239,68,68,0.12); }
+.coa-action-btn--view {
+  background: #eef5fc; color: #005494;
+  border: 1px solid rgba(0,84,148,0.2);
+}
+.coa-action-btn--view:hover { background: #d8ebf9; }
+
+/* ── Shared ─────────────────────────────────────────── */
+.coa-empty { color: #94a3b8; font-size: 0.85rem; padding: 20px 0; }
+.font-mono { font-family: 'Roboto Mono', 'SFMono-Regular', Consolas, monospace; }
+/* badge/dot reuse (same as dashboard) */
+.coa-badge { display: inline-flex; align-items: center; gap: 8px; font-size: 0.73rem; font-weight: 700; letter-spacing: 0.08em; color: #f2722b; background: rgba(242,114,43,0.08); border: 1px solid rgba(242,114,43,0.2); padding: 4px 14px; border-radius: 20px; margin-bottom: 8px; text-transform: uppercase; }
+.coa-badge__dot { width: 7px; height: 7px; border-radius: 50%; background: #f2722b; box-shadow: 0 0 8px #f2722b; animation: coaPulseDot 2s infinite; }
+@keyframes coaPulseDot { 0%,100%{opacity:1;} 50%{opacity:0.4;} }

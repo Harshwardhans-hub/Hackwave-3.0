@@ -8,73 +8,85 @@ import USPCards from './components/USPCards';
 import IndiaMap from './components/IndiaMap';
 import Footer from './components/Footer';
 
-// Public Dedicated Login Gateway
+// Login
 import LoginPage from './pages/LoginPage';
 
-// Operational Pages
-import DashboardPage from './pages/DashboardPage';
-import OptimizerPage from './pages/OptimizerPage';
-import FreightForecastPage from './pages/FreightForecastPage';
-import FieldDispatchPage from './pages/FieldDispatchPage';
-import WeatherPage from './pages/WeatherPage';
-import AuditPage from './pages/AuditPage';
+// COA Operational Pages
+import COADashboardPage  from './pages/COADashboardPage';
+import COARequestsPage   from './pages/COARequestsPage';
+import COASchedulePage   from './pages/COASchedulePage';
+
+// Department Pages (P-Way / S&T / TRD — shared components)
+import DeptDashboardPage from './pages/DeptDashboardPage';
+import DeptRequestsPage  from './pages/DeptRequestsPage';
+import DeptContactPage   from './pages/DeptContactPage';
+import DeptDispatchPage  from './pages/DeptDispatchPage';
+
+// Shared / legacy operational pages (still accessible from COA quick-nav)
+import DashboardPage        from './pages/DashboardPage';
+import OptimizerPage        from './pages/OptimizerPage';
+import FreightForecastPage  from './pages/FreightForecastPage';
+import FieldDispatchPage    from './pages/FieldDispatchPage';
+import WeatherPage          from './pages/WeatherPage';
+import AuditPage            from './pages/AuditPage';
 
 import './App.css';
 
+/* All routes that require login */
+const PROTECTED = [
+  'coa-dashboard', 'coa-requests', 'coa-schedule',
+  'dept-dashboard', 'dept-requests', 'dept-contact', 'dept-dispatch', 'dept-schedule',
+  'dashboard', 'optimizer', 'freight', 'field-dispatch', 'weather', 'audit', 'overview',
+];
+
+function resolveInitialRoute(savedUser) {
+  const raw = window.location.hash.replace(/^#\/?/, '').trim();
+  if (!savedUser) {
+    return raw === 'login' ? 'login' : 'landing';
+  }
+  // Logged-in user: honour hash if valid, else go to their home
+  if (PROTECTED.includes(raw)) return raw;
+  return homeRoute(savedUser);
+}
+
+function homeRoute(user) {
+  if (!user) return 'landing';
+  return user.authType === 'COA' ? 'coa-dashboard' : 'dept-dashboard';
+}
+
 export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
-  
-  // Persistent Auth State
+
   const [currentUser, setCurrentUser] = useState(() => {
     try {
       const saved = localStorage.getItem('sahayak_rail_user');
       return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
+    } catch { return null; }
   });
 
   const [currentRoute, setCurrentRoute] = useState(() => {
-    const raw = window.location.hash.replace(/^#\/?/, '').trim();
-    const validOperational = ['dashboard', 'optimizer', 'freight', 'field-dispatch', 'weather', 'audit', 'overview'];
-
     try {
-      const savedUser = localStorage.getItem('sahayak_rail_user');
-      if (savedUser) {
-        if (validOperational.includes(raw)) return raw;
-        return 'dashboard'; // Directly show dashboard when logged in
-      }
-    } catch {
-      // fallback
-    }
-
-    if (raw === 'login') return 'login';
-    return 'landing'; // Home page acts as landing page before login
+      const saved = localStorage.getItem('sahayak_rail_user');
+      return resolveInitialRoute(saved ? JSON.parse(saved) : null);
+    } catch { return 'landing'; }
   });
 
   useEffect(() => {
     const handleHashChange = () => {
       const raw = window.location.hash.replace(/^#\/?/, '').trim();
-      const validOperational = ['dashboard', 'optimizer', 'freight', 'field-dispatch', 'weather', 'audit', 'overview'];
-      
       if (!currentUser) {
-        if (raw === 'login') {
-          setCurrentRoute('login');
-        } else {
-          setCurrentRoute('landing');
-        }
+        setCurrentRoute(raw === 'login' ? 'login' : 'landing');
       } else {
         if (raw === 'login') {
-          setCurrentRoute('dashboard');
-        } else if (validOperational.includes(raw)) {
+          setCurrentRoute(homeRoute(currentUser));
+        } else if (PROTECTED.includes(raw)) {
           setCurrentRoute(raw);
         } else {
-          setCurrentRoute('dashboard');
+          setCurrentRoute(homeRoute(currentUser));
         }
       }
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
-
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, [currentUser]);
@@ -88,74 +100,64 @@ export default function App() {
         window.location.hash = '';
         setCurrentRoute('landing');
       }
+      return;
+    }
+    if (route === 'landing') {
+      window.location.hash = 'overview';
+      setCurrentRoute('overview');
     } else {
-      if (route === 'landing') {
-        window.location.hash = 'overview';
-        setCurrentRoute('overview');
-      } else {
-        window.location.hash = route;
-        setCurrentRoute(route);
-      }
+      window.location.hash = route;
+      setCurrentRoute(route);
     }
   };
 
   const handleLogin = (userData) => {
     setCurrentUser(userData);
-    try {
-      localStorage.setItem('sahayak_rail_user', JSON.stringify(userData));
-    } catch {
-      // ignore
-    }
+    try { localStorage.setItem('sahayak_rail_user', JSON.stringify(userData)); } catch {}
     setIsLoginOpen(false);
-    // Directly show dashboard after login as requested
-    window.location.hash = 'dashboard';
-    setCurrentRoute('dashboard');
+    const dest = userData.redirectTo || homeRoute(userData);
+    window.location.hash = dest;
+    setCurrentRoute(dest);
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
-    try {
-      localStorage.removeItem('sahayak_rail_user');
-    } catch {
-      // ignore
-    }
+    try { localStorage.removeItem('sahayak_rail_user'); } catch {}
     window.location.hash = '';
     setCurrentRoute('landing');
   };
 
+  const pageProps = { onNavigate: navigate, currentUser };
+
   return (
     <div className="app">
-      {/* Universal Official Indian Railways Header */}
-      <Navbar 
-        currentRoute={currentRoute} 
-        onNavigate={navigate} 
+      <Navbar
+        currentRoute={currentRoute}
+        onNavigate={navigate}
         onOpenLogin={() => navigate('login')}
         currentUser={currentUser}
         onLogout={handleLogout}
       />
 
-      {/* Official Department Login Modal (Optional quick modal) */}
-      <LoginModal 
-        isOpen={isLoginOpen} 
-        onClose={() => setIsLoginOpen(false)} 
-        onNavigate={() => {
-          handleLogin({
-            name: 'Er. R. K. Sharma',
-            department: 'Engineering (P-Way)',
-            role: 'Senior Section Engineer',
-            division: 'Northern Railway / Delhi Div'
-          });
-        }} 
+      <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        onNavigate={() => handleLogin({
+          name: 'Er. R. K. Sharma',
+          department: 'Engineering (P-Way)',
+          role: 'Senior Section Engineer',
+          division: 'Northern Railway / Delhi Div',
+          authType: 'PWAY',
+          redirectTo: 'dept-dashboard',
+        })}
       />
 
-      {/* Dynamic Route View */}
       <main className="app-main-content">
-        {/* Route 1: Dedicated Login Gateway */}
+        {/* ── Unauthenticated ─────────────────────────── */}
         {currentRoute === 'login' && (
           <LoginPage onLogin={handleLogin} onNavigate={navigate} />
         )}
 
-        {/* Route 2: Pre-login Landing Page (The full Home page with buttons disabled and linkages removed) */}
         {!currentUser && currentRoute !== 'login' && (
           <>
             <Hero onNavigate={navigate} isLoggedIn={false} />
@@ -167,31 +169,54 @@ export default function App() {
           </>
         )}
 
-        {/* Post-Login Operational Pages */}
+        {/* ── COA Pages ───────────────────────────────── */}
+        {currentUser && currentRoute === 'coa-dashboard' && (
+          <COADashboardPage {...pageProps} />
+        )}
+        {currentUser && currentRoute === 'coa-requests' && (
+          <COARequestsPage {...pageProps} />
+        )}
+        {currentUser && currentRoute === 'coa-schedule' && (
+          <COASchedulePage {...pageProps} />
+        )}
+
+        {/* ── Dept placeholder (P-Way / S&T / TRD) ───── */}
+        {currentUser && currentRoute === 'dept-dashboard' && (
+          <DeptDashboardPage {...pageProps} />
+        )}
+        {currentUser && currentRoute === 'dept-requests' && (
+          <DeptRequestsPage {...pageProps} />
+        )}
+        {currentUser && currentRoute === 'dept-contact' && (
+          <DeptContactPage {...pageProps} />
+        )}
+        {currentUser && currentRoute === 'dept-dispatch' && (
+          <DeptDispatchPage {...pageProps} />
+        )}
+        {/* dept-schedule reuses the COA schedule as read-friendly view */}
+        {currentUser && currentRoute === 'dept-schedule' && (
+          <COASchedulePage {...pageProps} />
+        )}
+
+        {/* ── Shared operational pages (COA quick-nav) ── */}
         {currentUser && currentRoute === 'dashboard' && (
-          <DashboardPage onNavigate={navigate} currentUser={currentUser} />
+          <DashboardPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'optimizer' && (
-          <OptimizerPage onNavigate={navigate} currentUser={currentUser} />
+          <OptimizerPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'freight' && (
-          <FreightForecastPage onNavigate={navigate} currentUser={currentUser} />
+          <FreightForecastPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'field-dispatch' && (
-          <FieldDispatchPage onNavigate={navigate} currentUser={currentUser} />
+          <FieldDispatchPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'weather' && (
-          <WeatherPage onNavigate={navigate} currentUser={currentUser} />
+          <WeatherPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'audit' && (
-          <AuditPage onNavigate={navigate} currentUser={currentUser} />
+          <AuditPage {...pageProps} />
         )}
-
         {currentUser && currentRoute === 'overview' && (
           <>
             <Hero onNavigate={navigate} isLoggedIn={true} />
@@ -206,3 +231,5 @@ export default function App() {
     </div>
   );
 }
+
+

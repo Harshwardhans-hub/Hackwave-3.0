@@ -1,0 +1,186 @@
+/* ==========================================================================
+   Sahayak Rail — Department Contact / Inter-Dept Page (light portal theme)
+   ========================================================================== */
+
+.dept-contact-page {
+  background: linear-gradient(180deg, #edf4fb 0%, #f4f8fc 60%, #ffffff 100%);
+  color: #1e293b;
+  min-height: 100vh;
+  padding: 24px 28px 56px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+.dept-contact-page__header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 20px;
+  border-bottom: 1px solid rgba(0,84,148,0.15);
+  padding-bottom: 20px; margin-bottom: 24px; flex-wrap: wrap;
+}
+.dept-contact-page__title {
+  font-size: 1.85rem; font-weight: 800;
+  letter-spacing: -0.02em; color: #1e293b;
+  margin: 4px 0 6px; line-height: 1.2;
+}
+.dept-contact-page__meta { font-size: 0.83rem; color: #64748b; max-width: 560px; line-height: 1.5; }
+.dept-contact-page__actions { display: flex; gap: 12px; }
+
+/* ── Filter tabs ──────────────────────────────────── */
+.dept-contact-tabs {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px;
+}
+.dept-contact-tab {
+  padding: 8px 16px; border-radius: 8px;
+  background: #fff; border: 1px solid #e2e8f0;
+  color: #64748b; font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+}
+.dept-contact-tab:hover  { border-color: rgba(0,84,148,0.3); color: #005494; }
+.dept-contact-tab.active {
+  background: color-mix(in srgb, var(--tab-color, #005494) 10%, white);
+  border-color: var(--tab-color, #005494);
+  color: var(--tab-color, #005494);
+}
+
+/* ── Request Cards ────────────────────────────────── */
+.dept-contact-cards { display: flex; flex-direction: column; gap: 14px; }
+.dept-contact-card {
+  background: #fff; border: 1px solid #e2e8f0;
+  border-left: 4px solid; border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 8px rgba(0,31,63,0.05);
+  transition: box-shadow 0.2s;
+}
+.dept-contact-card:hover { box-shadow: 0 6px 18px rgba(0,84,148,0.08); }
+
+.dept-contact-card__top {
+  display: flex; align-items: center;
+  justify-content: space-between; margin-bottom: 10px;
+  flex-wrap: wrap; gap: 8px;
+}
+.dept-contact-card__left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.dept-contact-card__id   { font-size: 0.78rem; color: #005494; font-family: 'Roboto Mono', monospace; font-weight: 600; }
+.dept-contact-card__dept { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+.dept-contact-card__urgency { font-size: 0.78rem; font-weight: 700; }
+.dept-contact-card__status  { font-size: 0.72rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+
+.dept-contact-card__activity { font-size: 0.96rem; font-weight: 700; color: #1e293b; margin-bottom: 6px; }
+.dept-contact-card__details  { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.78rem; color: #64748b; margin-bottom: 12px; }
+
+/* Expanded info */
+.dept-contact-card__expanded {
+  background: #f8fafc; border: 1px solid #e2e8f0;
+  border-radius: 8px; padding: 12px 14px;
+  margin-bottom: 12px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.dept-contact-detail-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.82rem;
+}
+.dept-contact-detail-row span  { color: #64748b; }
+.dept-contact-detail-row strong { color: #1e293b; }
+
+/* Card actions */
+.dept-contact-card__actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.dept-contact-btn {
+  padding: 7px 16px; border-radius: 8px;
+  font-size: 0.82rem; font-weight: 700; cursor: pointer;
+  transition: all 0.2s;
+}
+.dept-contact-btn--view {
+  background: #f1f5f9; color: #334155; border: 1px solid #e2e8f0;
+}
+.dept-contact-btn--view:hover { background: #e2e8f0; }
+.dept-contact-btn--contact {
+  border: 1px solid; display: flex; align-items: center; gap: 6px;
+}
+.dept-contact-btn--contact:hover { filter: brightness(0.94); }
+.dept-contact-sent {
+  font-size: 0.82rem; font-weight: 700; color: #059669;
+  background: #ecfdf5; padding: 7px 14px; border-radius: 8px;
+  border: 1px solid rgba(5,150,105,0.2);
+}
+
+/* ── Contact Modal ────────────────────────────────── */
+.dept-contact-modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(15,23,42,0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 999; padding: 20px;
+}
+.dept-contact-modal {
+  background: #fff; border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  width: 100%; max-width: 560px;
+  max-height: 90vh; overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,31,63,0.18);
+}
+.dept-contact-modal__header {
+  display: flex; align-items: flex-start;
+  justify-content: space-between; gap: 12px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid;
+}
+.dept-contact-modal__to {
+  font-size: 0.82rem; color: #64748b; margin-bottom: 4px;
+}
+.dept-contact-modal__to strong { color: #1e293b; }
+.dept-contact-modal__subject { font-size: 0.95rem; font-weight: 700; color: #1e293b; }
+.dept-contact-modal__close {
+  background: none; border: none; color: #94a3b8;
+  font-size: 1rem; cursor: pointer; flex-shrink: 0; padding: 2px;
+}
+.dept-contact-modal__close:hover { color: #1e293b; }
+
+/* Context info strip */
+.dept-contact-modal__context {
+  background: #f8fafc; border-bottom: 1px solid #e2e8f0;
+  padding: 12px 22px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.dept-contact-ctx-row {
+  display: flex; justify-content: space-between;
+  font-size: 0.8rem;
+}
+.dept-contact-ctx-row span   { color: #64748b; }
+.dept-contact-ctx-row strong { color: #1e293b; }
+
+/* Message area */
+.dept-contact-modal__body { padding: 16px 22px; }
+.dept-contact-modal__label {
+  display: block; font-size: 0.72rem; font-weight: 700;
+  color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 6px;
+}
+.dept-contact-modal__textarea {
+  width: 100%; box-sizing: border-box;
+  padding: 10px 12px; border-radius: 8px;
+  border: 1px solid #e2e8f0; background: #f8fafc;
+  color: #1e293b; font-size: 0.88rem; font-family: 'Inter', sans-serif;
+  resize: vertical; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.dept-contact-modal__textarea:focus {
+  border-color: var(--focus-color, #005494);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--focus-color, #005494) 15%, transparent);
+  background: #fff;
+}
+
+.dept-contact-modal__footer {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+  padding: 12px 22px 18px;
+  border-top: 1px solid #e2e8f0; flex-wrap: wrap;
+}
+.dept-contact-modal__from { font-size: 0.78rem; color: #64748b; }
+.dept-contact-modal__from strong { color: #1e293b; }
+
+/* Shared */
+.dept-empty  { color: #94a3b8; font-size: 0.85rem; padding: 20px 0; }
+.font-mono   { font-family: 'Roboto Mono', 'SFMono-Regular', Consolas, monospace; }
+.dept-badge  { display:inline-flex; align-items:center; gap:8px; font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:4px 14px; border-radius:20px; border:1px solid; margin-bottom:8px; }
+.dept-badge__dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; animation:deptDotPulse 2s infinite; }
+@keyframes deptDotPulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+.dept-btn-primary { color:#fff; border:none; padding:10px 20px; border-radius:8px; font-weight:700; font-size:0.85rem; cursor:pointer; box-shadow:0 2px 8px rgba(0,0,0,0.15); transition:all 0.2s; }
+.dept-btn-primary:hover { opacity:0.88; transform:translateY(-1px); }
+.dept-btn-outline { background:#fff; color:#334155; border:1px solid rgba(0,84,148,0.2); padding:10px 20px; border-radius:8px; font-weight:600; font-size:0.85rem; cursor:pointer; transition:all 0.2s; }
+.dept-btn-outline:hover { border-color:#005494; color:#005494; background:#eef5fc; }

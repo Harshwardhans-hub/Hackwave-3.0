@@ -2,55 +2,97 @@ import React, { useState } from 'react';
 import { IndianRailwaysLogo, CRISLogo } from '../components/Logos';
 import './LoginPage.css';
 
+const DEPARTMENT_PROFILES = [
+  {
+    key: 'COA',
+    label: 'COA – Control Office Application',
+    subtitle: 'Section Controller / Orchestrating Body',
+    icon: '🎛️',
+    color: '#3B82F6',
+    role: 'Section Controller',
+    department: 'COA (Control Office Application)',
+    division: 'Northern Railway / Delhi Division (DLI)',
+    name: 'Chief Controller A. K. Verma',
+    authType: 'COA',
+    redirectTo: 'coa-dashboard',
+  },
+  {
+    key: 'PWAY',
+    label: 'P-Way – Permanent Way / Engineering',
+    subtitle: 'Track Maintenance & Civil Engineering',
+    icon: '🛤️',
+    color: '#10B981',
+    role: 'Senior Section Engineer (SSE)',
+    department: 'Engineering (P-Way)',
+    division: 'Palwal – Mathura Section',
+    name: 'SSE R. K. Sharma',
+    authType: 'PWAY',
+    redirectTo: 'dept-dashboard',
+  },
+  {
+    key: 'SNT',
+    label: 'S&T – Signal & Telecommunication',
+    subtitle: 'Signalling, Interlocking & Telecom',
+    icon: '🚦',
+    color: '#F59E0B',
+    role: 'Senior Section Engineer (SSE)',
+    department: 'Signal & Telecom (S&T)',
+    division: 'Delhi – Agra Mainline',
+    name: 'SSE M. Patel',
+    authType: 'SNT',
+    redirectTo: 'dept-dashboard',
+  },
+  {
+    key: 'TRD',
+    label: 'TRD – Traction Distribution (25kV OHE)',
+    subtitle: 'Overhead Electrification & Traction Power',
+    icon: '⚡',
+    color: '#8B5CF6',
+    role: 'Senior Section Engineer (SSE)',
+    department: 'Electrical (TRD / OHE)',
+    division: 'Okhla Traction Substation',
+    name: 'SSE K. Deshmukh',
+    authType: 'TRD',
+    redirectTo: 'dept-dashboard',
+  },
+];
+
 export default function LoginPage({ onLogin, onNavigate }) {
-  const [activeTab, setActiveTab] = useState('department'); // 'department' | 'pin'
-  
-  // Department Form State
-  const [dept, setDept] = useState('Engineering (P-Way)');
-  const [roleLevel, setRoleLevel] = useState('Senior Section Engineer (SSE)');
-  const [officerName, setOfficerName] = useState('Er. R. K. Sharma');
-  const [division, setDivision] = useState('Northern Railway / Delhi Division (DLI)');
-  const [operationalDate, setOperationalDate] = useState('2026-09-25');
+  const [selected, setSelected] = useState(null);
+  const [officerName, setOfficerName] = useState('');
+  const [division, setDivision] = useState('');
+  const [step, setStep] = useState('select'); // 'select' | 'confirm'
 
-  // Controller PIN State
-  const [scrCode, setScrCode] = useState('SCR-NR-DLI-104');
-  const [pinToken, setPinToken] = useState('884102');
-
-  const handleDeptSubmit = (e) => {
-    e.preventDefault();
-    const userData = {
-      name: officerName,
-      department: dept,
-      role: roleLevel,
-      division: division,
-      date: operationalDate,
-      authType: 'DEPARTMENT_SSO'
-    };
-    onLogin(userData);
+  const handleSelectDept = (profile) => {
+    setSelected(profile);
+    setOfficerName(profile.name);
+    setDivision(profile.division);
+    setStep('confirm');
   };
 
-  const handlePinSubmit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const userData = {
-      name: 'Chief Controller A. K. Verma',
-      department: 'Operating (Traffic)',
-      role: 'Section Controller (SCR)',
-      division: division,
-      scrCode: scrCode,
-      authType: 'CONTROLLER_PIN'
-    };
-    onLogin(userData);
+    if (!selected) return;
+    onLogin({
+      name: officerName || selected.name,
+      department: selected.department,
+      role: selected.role,
+      division: division || selected.division,
+      authType: selected.authType,
+      redirectTo: selected.redirectTo,
+    });
   };
 
-  const handleQuickDemo = (profile) => {
-    onLogin(profile);
+  const handleBack = () => {
+    setSelected(null);
+    setStep('select');
   };
 
   return (
     <div className="login-page-container">
       <div className="login-card-wrapper">
         <div className="login-card">
-          {/* Card Header with official crests */}
+          {/* Header */}
           <div className="login-card-header">
             <div className="login-header-logos">
               <IndianRailwaysLogo size={52} />
@@ -64,231 +106,84 @@ export default function LoginPage({ onLogin, onNavigate }) {
             </div>
           </div>
 
-          {/* Navigation Tabs */}
-          <div className="login-tabs-nav">
-            <button
-              type="button"
-              className={`login-tab-btn ${activeTab === 'department' ? 'active' : ''}`}
-              onClick={() => setActiveTab('department')}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              Department Login
-            </button>
-
-            <button
-              type="button"
-              className={`login-tab-btn ${activeTab === 'pin' ? 'active' : ''}`}
-              onClick={() => setActiveTab('pin')}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-              Controller PIN
-            </button>
-          </div>
-
-          {/* Form Body */}
-          <div className="login-form-body">
-            {activeTab === 'department' ? (
-              <form onSubmit={handleDeptSubmit}>
-                <div className="login-field-group">
-                  <label className="login-label">Department</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">🏢</span>
-                    <select
-                      value={dept}
-                      onChange={(e) => setDept(e.target.value)}
-                      className="login-select"
-                      required
-                    >
-                      <option value="Engineering (P-Way)">Engineering (Permanent Way / Track)</option>
-                      <option value="Signal & Telecom">Signal & Telecom (S&T / Interlocking)</option>
-                      <option value="Electrical (TRD / OHE)">Electrical (Traction Distribution / 25kV OHE)</option>
-                      <option value="Operating (Traffic)">Operating Department (Traffic & Punctuality)</option>
-                      <option value="Safety Directorate">Safety Directorate / RDSO</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="login-field-group">
-                  <label className="login-label">Designation / Role Level</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">🎖️</span>
-                    <select
-                      value={roleLevel}
-                      onChange={(e) => setRoleLevel(e.target.value)}
-                      className="login-select"
-                      required
-                    >
-                      <option value="Senior Section Engineer (SSE)">Senior Section Engineer (SSE / In-Charge)</option>
-                      <option value="Section Controller (SCR)">Section Controller (Operating Branch)</option>
-                      <option value="Junior Engineer (JE)">Junior Engineer (Field Supervisor)</option>
-                      <option value="Senior DOM / Operations">Senior DOM / Operations Officer</option>
-                      <option value="DRM / ADRM Operations">Divisional Railway Manager (DRM / ADRM)</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="login-field-group">
-                  <label className="login-label">Officer / Engineer Name</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">👤</span>
-                    <input
-                      type="text"
-                      value={officerName}
-                      onChange={(e) => setOfficerName(e.target.value)}
-                      placeholder="e.g. Er. R. K. Sharma"
-                      className="login-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="login-field-group">
-                  <label className="login-label">Division / Corridor Section</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">📍</span>
-                    <input
-                      type="text"
-                      value={division}
-                      onChange={(e) => setDivision(e.target.value)}
-                      placeholder="Division / Section"
-                      className="login-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <button type="submit" className="login-btn-submit" id="btn-login-dept-submit">
-                  Enter Operational Portal →
-                </button>
-              </form>
-            ) : (
-              <form onSubmit={handlePinSubmit}>
-                <div className="login-field-group">
-                  <label className="login-label">Section Controller Code (SCR)</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">🚂</span>
-                    <input
-                      type="text"
-                      value={scrCode}
-                      onChange={(e) => setScrCode(e.target.value)}
-                      placeholder="e.g. SCR-NR-DLI-104"
-                      className="login-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className="login-field-group">
-                  <label className="login-label">6-Digit Cryptographic Private Token (PN)</label>
-                  <div className="login-input-wrap">
-                    <span className="login-input-icon">🔑</span>
-                    <input
-                      type="password"
-                      value={pinToken}
-                      onChange={(e) => setPinToken(e.target.value)}
-                      placeholder="Enter 6-digit PIN"
-                      className="login-input"
-                      required
-                    />
-                  </div>
-                </div>
-
-                <button type="submit" className="login-btn-submit" id="btn-login-pin-submit">
-                  Authorize Controller Command Deck →
-                </button>
-              </form>
-            )}
-
-            {/* Quick 1-Click Role Profiles for SIH Evaluation */}
-            <div className="login-demo-roles">
-              <div className="login-demo-title">
-                <span>Fast Evaluation Access</span>
-                <span className="login-demo-badge">1-CLICK LOGIN</span>
-              </div>
-
-              <div className="login-demo-grid">
-                <button
-                  type="button"
-                  className="login-demo-btn"
-                  onClick={() => handleQuickDemo({
-                    name: 'Chief Controller A. K. Verma',
-                    department: 'Operating (Traffic)',
-                    role: 'Section Controller',
-                    division: 'Northern Railway / Delhi Div',
-                    authType: 'CONTROLLER'
-                  })}
-                >
-                  <span className="login-demo-icon">👨‍✈️</span>
-                  <div>
-                    <span className="login-demo-name">SCR Verma</span>
-                    <span className="login-demo-dept">Section Controller</span>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="login-demo-btn"
-                  onClick={() => handleQuickDemo({
-                    name: 'SSE R. K. Sharma',
-                    department: 'Engineering (P-Way)',
-                    role: 'Senior Section Engineer',
-                    division: 'Palwal – Mathura Section',
-                    authType: 'PWAY'
-                  })}
-                >
-                  <span className="login-demo-icon">🛤️</span>
-                  <div>
-                    <span className="login-demo-name">SSE Sharma</span>
-                    <span className="login-demo-dept">P-Way Track Engg</span>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="login-demo-btn"
-                  onClick={() => handleQuickDemo({
-                    name: 'SSE M. Patel',
-                    department: 'Signal & Telecom',
-                    role: 'Senior Section Engineer',
-                    division: 'Delhi – Agra Mainline',
-                    authType: 'SNT'
-                  })}
-                >
-                  <span className="login-demo-icon">🚦</span>
-                  <div>
-                    <span className="login-demo-name">SSE Patel</span>
-                    <span className="login-demo-dept">Signal & Telecom</span>
-                  </div>
-                </button>
-
-                <button
-                  type="button"
-                  className="login-demo-btn"
-                  onClick={() => handleQuickDemo({
-                    name: 'SSE K. Deshmukh',
-                    department: 'Electrical (TRD / OHE)',
-                    role: 'Senior Section Engineer',
-                    division: 'Okhla Traction Substation',
-                    authType: 'TRD'
-                  })}
-                >
-                  <span className="login-demo-icon">⚡</span>
-                  <div>
-                    <span className="login-demo-name">SSE Deshmukh</span>
-                    <span className="login-demo-dept">25kV Catenary / TRD</span>
-                  </div>
-                </button>
+          {/* Step 1: Department Selection */}
+          {step === 'select' && (
+            <div className="login-dept-select">
+              <p className="login-dept-prompt">Select your department to continue:</p>
+              <div className="login-dept-grid">
+                {DEPARTMENT_PROFILES.map((profile) => (
+                  <button
+                    key={profile.key}
+                    className="login-dept-card"
+                    onClick={() => handleSelectDept(profile)}
+                    style={{ '--dept-color': profile.color }}
+                  >
+                    <span className="login-dept-icon">{profile.icon}</span>
+                    <div className="login-dept-info">
+                      <span className="login-dept-label">{profile.label}</span>
+                      <span className="login-dept-sub">{profile.subtitle}</span>
+                    </div>
+                    <svg className="login-dept-arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                  </button>
+                ))}
               </div>
             </div>
-          </div>
+          )}
 
-          {/* Footer Back Link */}
+          {/* Step 2: Confirm Details & Login */}
+          {step === 'confirm' && selected && (
+            <form className="login-form-body" onSubmit={handleSubmit}>
+              <button type="button" className="login-back-btn" onClick={handleBack}>
+                ← Back
+              </button>
+
+              <div className="login-selected-dept" style={{ '--dept-color': selected.color }}>
+                <span className="login-dept-icon">{selected.icon}</span>
+                <div>
+                  <span className="login-dept-label">{selected.label}</span>
+                  <span className="login-dept-sub">{selected.subtitle}</span>
+                </div>
+              </div>
+
+              <div className="login-field-group">
+                <label className="login-label">Officer / Engineer Name</label>
+                <div className="login-input-wrap">
+                  <span className="login-input-icon">👤</span>
+                  <input
+                    type="text"
+                    value={officerName}
+                    onChange={(e) => setOfficerName(e.target.value)}
+                    className="login-input"
+                    placeholder="Full name"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div className="login-field-group">
+                <label className="login-label">Division / Section</label>
+                <div className="login-input-wrap">
+                  <span className="login-input-icon">📍</span>
+                  <input
+                    type="text"
+                    value={division}
+                    onChange={(e) => setDivision(e.target.value)}
+                    className="login-input"
+                    placeholder="Division / Section"
+                    required
+                  />
+                </div>
+              </div>
+
+              <button type="submit" className="login-btn-submit" id="btn-login-submit">
+                Enter Operational Portal →
+              </button>
+            </form>
+          )}
+
+          {/* Footer */}
           <div className="login-footer-nav">
             <span
               className="login-back-link"
