@@ -1,5 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.egg-info/
+.coverage
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Environment Variables & Secrets (Keep .env.example)
+.env
+.env.*
+!.env.example
+
+# Database temporary/journal files
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Node & Frontend dependencies and builds
+node_modules/
+dist/
+dist-ssr/
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+*.local
+
 # Logs
-logs
+logs/
 *.log
 npm-debug.log*
 yarn-debug.log*
@@ -7,21 +42,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
-dist
-dist-ssr
-*.local
-
-# Editor directories and files
+# Editor & OS files
 .vscode/*
 !.vscode/extensions.json
-.idea
+.idea/
 .DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-
+# Temporary files
+*.tmp
+*.bak
 sih2.0
