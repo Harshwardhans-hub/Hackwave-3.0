@@ -26,7 +26,7 @@ export default function RailConnectBanner({ onNavigate, isLoggedIn = false }) {
 
           {/* Right Content: Field Dispatch Focus */}
           <div className="irctc-app-promo__content">
-            <div className="irctc-app-promo__tag">SIH KEY DIFFERENTIATOR • USP #1</div>
+            <div className="irctc-app-promo__tag">KEY DIFFERENTIATOR • USP #1</div>
             <h2 className="irctc-app-promo__title">
               field dispatch, now just an SMS away
             </h2>

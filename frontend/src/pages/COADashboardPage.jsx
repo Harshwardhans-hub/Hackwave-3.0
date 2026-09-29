@@ -160,7 +160,7 @@ export default function COADashboardPage({ onNavigate, currentUser }) {
             Section Controller <span>Command Centre</span>
           </h1>
           <p className="coa-dash__meta">
-            Welcome, {currentUser?.name} — {currentUser?.role} &nbsp;|&nbsp; Sahayak Rail · SIH 26027
+            Welcome, {currentUser?.name} — {currentUser?.role} &nbsp;|&nbsp; Sahayak Rail · Control Office Operations
           </p>
         </div>
 

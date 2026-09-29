@@ -472,7 +472,7 @@ export default function DashboardPage({ onNavigate }) {
             Corridor Block Controller <span>Command Center</span>
           </h1>
           <p className="dash-header__meta">
-            Sahayak Rail Operational Interface • SIH 26027 Real-Time Decision Support
+            Sahayak Rail Operational Interface • Real-Time Decision Support
           </p>
         </div>
 

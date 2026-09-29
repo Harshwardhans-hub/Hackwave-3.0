@@ -178,7 +178,7 @@ export default function OptimizerPage({ onNavigate }) {
         <div className="opt-header__left">
           <div className="opt-header__badge">
             <span className="opt-header__dot"></span>
-            GOOGLE OR-TOOLS CP-SAT CONSTRAINT SOLVER ENGINE • SIH 26027
+            GOOGLE OR-TOOLS CP-SAT CONSTRAINT SOLVER ENGINE • HACKWAVE 3.0
           </div>
           <h1 className="opt-header__title">
             AI Maintenance Block <span>Optimizer & Bundler</span>

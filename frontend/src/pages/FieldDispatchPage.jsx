@@ -73,7 +73,7 @@ export default function FieldDispatchPage({ onNavigate }) {
         <div className="field-header__left">
           <div className="field-header__badge">
             <span className="field-header__dot"></span>
-            SIH KEY DIFFERENTIATOR • USP #1 (LOW-CONNECTIVITY 2G SMS / WHATSAPP DISPATCH)
+            KEY DIFFERENTIATOR • USP #1 (LOW-CONNECTIVITY 2G SMS / WHATSAPP DISPATCH)
           </div>
           <h1 className="field-header__title">
             Field Personnel <span>2G SMS & Dispatch Terminal</span>

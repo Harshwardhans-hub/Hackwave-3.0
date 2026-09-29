@@ -89,7 +89,7 @@ export default function Navbar({ currentRoute, onNavigate, onOpenLogin, currentU
 
   const activeNavItems = currentUser?.authType === 'COA' ? coaNavItems : deptNavItems;
 
-  // Authentic Indian Railways data systems & modules from SIH 26027 PDF
+  // Authentic Indian Railways data systems & modules
   const systemMenuItems = [
     { label: 'TMS (Track Defects, TGI & USFD)', icon: '🛤️', action: () => onNavigate(getDashboardRoute()) },
     { label: 'SMMS (Signals & Point Machines)', icon: '🚦', action: () => onNavigate(getDashboardRoute()) },
@@ -122,7 +122,7 @@ export default function Navbar({ currentRoute, onNavigate, onOpenLogin, currentU
               </div>
               <div className="irctc-brand-text">
                 <div className="irctc-brand-title">Sahayak <span>Rail</span></div>
-                <div className="irctc-brand-sub">INDIAN RAILWAYS • SIH 26027</div>
+                <div className="irctc-brand-sub">INDIAN RAILWAYS • HACKWAVE 3.0</div>
               </div>
             </div>
           </div>

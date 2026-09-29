@@ -90,7 +90,7 @@ export default function FreightForecastPage({ onNavigate }) {
         <div className="freight-header__left">
           <div className="freight-header__badge">
             <span className="freight-header__dot"></span>
-            SIH KEY DIFFERENTIATOR • USP #2 (DATA.GOV.IN ENSEMBLE FORECASTER)
+            KEY DIFFERENTIATOR • USP #2 (DATA.GOV.IN ENSEMBLE FORECASTER)
           </div>
           <h1 className="freight-header__title">
             Goods Train / Freight <span>Dynamic Forecaster</span>

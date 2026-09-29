@@ -1,4 +1,4 @@
-# 🚆 Sahayak Rail (सहायक रेल) — SIH 26027
+# 🚆 Sahayak Rail (सहायक रेल)
 ## Comprehensive Prototype Status Report & Backend Architecture Roadmap
 
 ---
@@ -6,14 +6,14 @@
 ## 📌 Executive Summary
 
 **Project Title:** Sahayak Rail (सहायक रेल) — AI-Powered Multi-Department Maintenance Block Scheduler  
-**Problem Statement ID:** SIH 26027  
+**Focus Domain:** Railway Infrastructure & Maintenance Block Scheduling  
 **Organization / Ministry:** Ministry of Railways (Railway Board / CRIS / RDSO)  
-**Target Milestone:** Functional End-to-End Prototype for Smart India Hackathon (SIH) 2026  
+**Target Milestone:** Functional End-to-End Prototype for Hackwave 3.0  
 **Document Purpose:** Complete technical audit of the existing frontend demo, identification of mock vs. functional elements, and an actionable, prioritized roadmap for developing the backend.
 
 ---
 
-## 1. Problem Statement Deconstruction (SIH 26027)
+## 1. Problem Statement Deconstruction
 
 ### 1.1 The Core Operating Bottleneck
 Indian Railways operates over **68,000+ route kilometers**, running **13,000+ passenger trains** and **8,000+ freight rakes** daily. Maintaining track geometry, 25 kV overhead catenary (OHE), and signaling requires **Track Maintenance Blocks (Possessions)** where train movements are suspended.
@@ -27,7 +27,7 @@ Currently, maintenance planning across three primary departments operates in sil
 Each department requests separate track blocks for the same corridor segment on different days (e.g., P-Way on Monday, S&T on Tuesday, TRD on Wednesday). This leads to **repeated track closures (7.5+ hours of lost throughput across three days)**, when all three maintenance activities could be bundled into a **single 3.5–4 hour shadow block**. Furthermore, coordination relies on manual paper memos, unintegrated BDMS requests, and phone calls between Section Controllers and Station Masters.
 
 ### 1.2 The Four Mandatory PS Requirements
-According to the official SIH 26027 Problem Statement, any winning solution must address:
+According to the operational mandate, any production solution must address:
 
 | # | Mandate | Practical Meaning |
 | :--- | :--- | :--- |
@@ -40,7 +40,7 @@ According to the official SIH 26027 Problem Statement, any winning solution must
 
 ## 2. Competitive Landscape & Our Winning Edge (The 4 USPs)
 
-An in-depth analysis of rival SIH solutions (e.g., *RAILBLOCK*, *Junction*, *ELITE*, *SIH-Railway-Planner*, *Monocle*) reveals that standard optimization (Google OR-Tools CP-SAT) and basic Gantt charts are **table stakes**—almost every team attempts them.
+An in-depth analysis of alternative railway scheduling tools reveals that standard optimization (Google OR-Tools CP-SAT) and basic Gantt charts are **table stakes**—almost every tool attempts them.
 
 To win, Sahayak Rail focuses on the **four critical operational realities that competitors miss**:
 
@@ -191,7 +191,7 @@ The existing frontend is an aesthetically polished React 19 application configur
 
 ## 5. Target Backend Architecture
 
-To build a reliable prototype that satisfies the SIH judges, we will implement a **Python FastAPI backend** with a clean, modular design:
+To build an enterprise-grade prototype, we will implement a **Python FastAPI backend** with a clean, modular design:
 
 ```
                                  ┌────────────────────────────────────────────────────────┐
@@ -252,7 +252,7 @@ To balance hackathon deadlines with maximum judge impact, the development sequen
 
 ---
 
-### Phase 2: Medium Priority (SIH Winning USPs) — *Do Next*
+### Phase 2: Medium Priority (Key Winning USPs) — *Do Next*
 *These cover the specific features that separate our prototype from all competitors.*
 
 6. **2G SMS Parser & Dispatch Engine (USP #1):**
@@ -308,5 +308,5 @@ To balance hackathon deadlines with maximum judge impact, the development sequen
 ## 8. Summary & Next Steps
 
 1. **Frontend Assessment:** The frontend is **feature-complete and visually presentation-ready**. It requires no major visual overhaul—only API client integration to replace mock data with live responses.
-2. **Backend Plan:** Building the backend in Python using **FastAPI + Google OR-Tools CP-SAT** allows us to directly implement the core solver logic, ML scoring, and SIH differentiator APIs.
+2. **Backend Plan:** Building the backend in Python using **FastAPI + Google OR-Tools CP-SAT** allows us to directly implement the core solver logic, ML scoring, and high-impact differentiator APIs.
 3. **Immediate Action:** Initialize the `backend/` directory, set up dependencies (`fastapi`, `uvicorn`, `ortools`, `pydantic`), seed the railway domain datasets, and wire the first live endpoints to `DashboardPage` and `OptimizerPage`.

@@ -67,7 +67,7 @@ export default function Hero({ onNavigate, isLoggedIn = false }) {
             </h1>
             <p className="irctc-hero-subtitle">
               Sahayak Rail — AI-Powered Automatic Block Planning for Indian Railways
-              <span className="irctc-hero-badge">CP-SAT SOLVER · MINISTRY OF RAILWAYS · SIH 26027</span>
+              <span className="irctc-hero-badge">CP-SAT SOLVER · MINISTRY OF RAILWAYS · HACKWAVE 3.0</span>
             </p>
           </div>
 

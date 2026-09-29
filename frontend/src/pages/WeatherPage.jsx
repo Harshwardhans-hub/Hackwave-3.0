@@ -53,7 +53,7 @@ export default function WeatherPage({ onNavigate }) {
         <div className="weather-header__left">
           <div className="weather-header__badge">
             <span className="weather-header__dot"></span>
-            SIH KEY DIFFERENTIATOR • USP #3 (IMD WEATHER & MONSOON RESILIENCE)
+            KEY DIFFERENTIATOR • USP #3 (IMD WEATHER & MONSOON RESILIENCE)
           </div>
           <h1 className="weather-header__title">
             Weather & Monsoon <span>Risk Adaptation Radar</span>

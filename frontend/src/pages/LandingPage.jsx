@@ -20,7 +20,7 @@ export default function LandingPage({ onNavigate, onQuickRoleLogin }) {
           <div className="landing-hero__content">
             <div className="landing-badge">
               <span className="landing-badge__dot"></span>
-              MINISTRY OF RAILWAYS • SIH 2026 PROBLEM 26027
+              MINISTRY OF RAILWAYS • HACKWAVE 3.0
             </div>
 
             <h1 className="landing-title">
@@ -127,7 +127,7 @@ export default function LandingPage({ onNavigate, onQuickRoleLogin }) {
       {/* 4 Winning USPs Section */}
       <section className="landing-section" id="usps-section">
         <div className="landing-section-header">
-          <span className="landing-section-tag">Competitor Gap Analysis • SIH 26027</span>
+          <span className="landing-section-tag">Competitor Gap Analysis • Operational Realities</span>
           <h2 className="landing-section-title">The Four Operational Pillars Nobody Else Built</h2>
           <p className="landing-section-desc">
             Standard mathematical optimization is table stakes. Sahayak Rail wins by solving 

@@ -102,7 +102,7 @@ export default function LoginPage({ onLogin, onNavigate }) {
               Sahayak <span>Rail</span> SSO Gateway
             </h1>
             <div className="login-card-subtitle">
-              MINISTRY OF RAILWAYS • SIH 2026 • CRIS E-OFFICE
+              MINISTRY OF RAILWAYS • HACKWAVE 3.0 • CRIS E-OFFICE
             </div>
           </div>
 
